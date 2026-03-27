@@ -1,23 +1,38 @@
-import java.time.Clock;
+package org.example;
+
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 public class Welcome {
-    private Clock clock;
+    private final Clock clock;
 
-    public Welcome(){
-        this(Clock.systemDefaultZone()); //real clock
+    public interface Clock {
+        LocalDateTime now();
     }
 
-    public  Welcome (Clock clock) {
-        this.clock = clock; //fake clock
+// Constructeur avec injection — utilisé aussi par les tests
+    public Welcome(Clock clock) {
+        this.clock = clock;
     }
+
+// Constructeur par défaut — utilise l'horloge système réelle
+    public Welcome() {
+        this(new SystemClock());
+    }
+
+//    public org.example.Welcome(){
+//        this(Clock.systemDefaultZone()); //real clock
+//    }
+//
+//    public  org.example.Welcome (Clock clock) {
+//        this.clock = clock; //fake clock
+//    }
 
     public String getMessage() {
-        LocalDateTime dateTime = LocalDateTime.now(clock);
-        DayOfWeek day = dateTime.getDayOfWeek();
-
-        int hour = dateTime.getHour();
+//      LocalDateTime now = LocalDateTime.now(clock);
+        LocalDateTime now = clock.now(); // ← On utilise l'abstraction
+        int hour = now.getHour();
+        DayOfWeek day = now.getDayOfWeek();
 
         if (day == DayOfWeek.MONDAY || day == DayOfWeek.TUESDAY || day == DayOfWeek.WEDNESDAY || day == DayOfWeek.THURSDAY || day == DayOfWeek.FRIDAY) {
             if (hour >= 9 && hour < 13) {
