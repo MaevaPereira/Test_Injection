@@ -20,16 +20,7 @@ public class Welcome {
         this(new SystemClock());
     }
 
-//    public org.example.Welcome(){
-//        this(Clock.systemDefaultZone()); //real clock
-//    }
-//
-//    public  org.example.Welcome (Clock clock) {
-//        this.clock = clock; //fake clock
-//    }
-
     public String getMessage() {
-//      LocalDateTime now = LocalDateTime.now(clock);
         LocalDateTime now = clock.now(); // ← On utilise l'abstraction
         int hour = now.getHour();
         DayOfWeek day = now.getDayOfWeek();
